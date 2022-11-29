@@ -3,7 +3,22 @@
 #https://unix.stackexchange.com/questions/53841/how-to-use-a-timer-in-bash
 
 
-date1=$(date -d'+1day' +%s%3N)
+FILE=./tmp
+if test -f "$FILE"; then
+    date1=$(cat tmp)
+    else
+       date1=$(date -d'+1day' +%s%3N)
+       echo $date1 > tmp
+fi
+
+if (( date1 > $(date -d'+1day' +%s%3N) )); then
+    date1=$(date -d'+1day' +%s%3N)
+    echo $date1 > tmp
+    echo "updated to new day"
+    else
+    echo "same reminder"
+fi
+
 #date1=$(date -d'+42seconds' +%s%3N)
 
 echo $date1
@@ -11,7 +26,7 @@ echo $date1
 while :; do
 test=$(( $(date +%s%3N) ))
 #test=5-1;
-echo "$test"
+
 if [[ $test > $date1 ]]; then
 
    zenity --info \
@@ -20,8 +35,11 @@ if [[ $test > $date1 ]]; then
         spd-say 'reminder to take pills.'
    echo "testing"
    date1=$(date -d'+1day' +%s%3N)
+   echo $date1 > tmp
+   else
+   echo "$test"
     fi
-    sleep 10;
+    sleep 200;
     
 done
 
