@@ -19,6 +19,7 @@ if [[ $test > $date1 ]]; then
 
         spd-say 'reminder to take pills.'
    echo "testing"
+   date1=$(date -d'+1day' +%s%3N)
     fi
     sleep 10;
     
